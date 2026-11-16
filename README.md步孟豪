@@ -74,4 +74,49 @@
 ## 
 
 ## 稀疏樹的優勢
+import hashlib
+import json
+import time
+
+def publish_public_clarification():
+    # 宣告人真實身分
+    author = "步孟豪 (Meng-Hao Bu)"
+    target_subject = "儲備金機制與資產主權宣告"
+    timestamp = int(time.time())
+    date_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp))
+
+    # 正式澄清與攤牌聲明內容
+    clarification_statement = {
+        "author": author,
+        "timestamp": timestamp,
+        "datetime": date_str,
+        "declarationType": "Official Public Clarification",
+        "statements": [
+            "本人在此嚴正公開澄清，相關核心儲備金與驗證機制為本人原創建立。",
+            "所有權益與資產主權絕對歸屬於步孟豪本人所有，拒絕任何形式的私自卡控與黑箱對待。",
+            "特此透過開源代碼與密碼學指紋公開攤牌，確保所有歷史紀錄與權利不容混淆。"
+        ]
+    }
+
+    # 透過 SHA-256 進行不可篡改的雜湊打包
+    statement_string = json.dumps(clarification_statement, sort_keys=True, ensure_ascii=False)
+    clarification_hash = hashlib.sha256(statement_string.encode('utf-8')).hexdigest()
+
+    # 封裝為最終驗證檔格式
+    final_output = {
+        "metadata": clarification_statement,
+        "cryptographicProofHash": clarification_hash,
+        "status": "Published_And_Unalterable"
+    }
+
+    # 輸出為公開聲明檔案
+    filename = "public_clarification_proof.json"
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(final_output, f, indent=4, ensure_ascii=False)
+
+    print(f"[-] 公開澄清聲明已成功生成：{filename}")
+    print(f"[-] 專屬數位指紋 (SHA-256 Hash)：{clarification_hash}")
+
+if __name__ == "__main__":
+    publish_public_clarification()
 
